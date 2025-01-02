@@ -11,23 +11,49 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { styled, alpha} from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import logo from "../img/logo.png";
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['Home', 'Fashion','About Us', 'Contact Us'];
-const settings = ['Profile', 'login', 'Logout'];
+const pages = ['Home', 'Fashion', 'About Us', 'Contact Us'];
+const settings = ['Profile', 'Login', 'Logout'];
 
-function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<Element & EventTarget|null>(null);
+const Navbar: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handlePageClick = (page: string) => {
+    switch (page) {
+      case 'Home':
+        navigate('/'); 
+        break;
+      case 'Fashion':
+        navigate('/fashion'); 
+        break;
+      case 'About Us':
+        navigate('/about');
+        break;
+      case 'Contact Us':
+        navigate('/contact'); 
+        break;
+      default:
+        navigate('/');
+        break;
+    }
+  };
+
+
+
+  const [anchorElNav, setAnchorElNav] = React.useState<Element & EventTarget | null>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<(Element & EventTarget) | null>(null);
 
-  const handleOpenNavMenu = (event:React.MouseEvent) => {
+  const handleOpenNavMenu = (event: React.MouseEvent) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event:React.MouseEvent) => {
+
+  const handleOpenUserMenu = (event: React.MouseEvent) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -39,13 +65,13 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-
-const Search = styled('div')(({ theme }) => ({
+  // Styled component for search bar
+  const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
     '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
+      backgroundColor: alpha(theme.palette.common.white, 0.35),
     },
     marginLeft: 0,
     width: '100%',
@@ -64,50 +90,31 @@ const Search = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
   }));
+
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     width: '100%',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
       [theme.breakpoints.up('sm')]: {
-        width: '12ch',
+        width: '15ch',
         '&:focus': {
           width: '20ch',
         },
       },
     },
   }));
-  
 
   return (
-    <AppBar position="static" sx={{backgroundColor: "#4DA1A9"}}>
+    <AppBar position="static" sx={{ backgroundColor: "#2E5077" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+
           <Box display="flex" justifyContent="center" alignItems="center" m={2}>
-          {/* <Avatar alt="Logo" src="./img/logo.png" sx={{ width: 56, height: 56 }} /> */}
-          {/* <img src="./img/logo.png" alt="logo" style={{ width: 100, height: 'auto' }}/> */}
+            <Avatar alt="Logo" src={logo} sx={{ width: 56, height: 56 }} />
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -137,36 +144,18 @@ const Search = styled('div')(({ theme }) => ({
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                <MenuItem key={page} onClick={() => handlePageClick(page)}>
+                  <Typography sx={{ textAlign: 'center', fontWeight:"bold" }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageClick(page)} 
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -174,7 +163,7 @@ const Search = styled('div')(({ theme }) => ({
             ))}
           </Box>
 
-          <Search sx={{marginRight:"3rem"}}>
+          <Search sx={{ marginRight: "3rem" }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -187,11 +176,11 @@ const Search = styled('div')(({ theme }) => ({
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="M" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '5rem'}}
+              sx={{ mt: '5rem' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -213,10 +202,12 @@ const Search = styled('div')(({ theme }) => ({
               ))}
             </Menu>
           </Box>
-          <ShoppingCartIcon  sx={{marginLeft:"2rem"}}/>
+
+          <ShoppingCartIcon sx={{ marginLeft: "2rem" }} />
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default Navbar;

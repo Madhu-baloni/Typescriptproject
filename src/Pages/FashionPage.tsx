@@ -1,8 +1,11 @@
-
+import Product from "../Apifetch/Prduct"
 
 function FashionPage() {
   return (
-    <div>FashionPage</div>
+    <>
+    <h1>hello</h1>
+        <Product />
+        </>
   )
 }
 
