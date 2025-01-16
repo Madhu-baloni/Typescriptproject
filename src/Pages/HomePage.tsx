@@ -6,10 +6,15 @@ import menPic from "../img/menPic.png";
 import kidsPic from "../img/kidsPic.png";
 import Slider from "../components/Slider";
 import classes from "../styles/homePage.module.css";
-import Product from "../Apifetch/Prduct";
+import Product from "../Apifetch/Product";
+// import { useNavigate } from "react-router-dom";
 
 
 const HomePage: React.FC = () => {
+  // const navigate = useNavigate();
+  // const handleClick = () => {
+  //   navigate('/Product')
+  // }
   return (
     <>
       <Box className={classes.box}>
@@ -33,6 +38,7 @@ const HomePage: React.FC = () => {
             color: "white",
             textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
           }}
+          // onClick={handleClick}
         >
           Shop Now
         </Button>
@@ -46,7 +52,7 @@ const HomePage: React.FC = () => {
                 variant="h5"
                 sx={{ fontWeight: "bold", fontFamily: "cursive" }}
               >
-                Women's Wear
+                Women Wear
               </Typography>
               <Avatar
                 alt="women"
@@ -62,7 +68,7 @@ const HomePage: React.FC = () => {
                 sx={{ fontWeight: "bold", fontFamily: "cursive" }}
               >
                 {" "}
-                Men's Wear
+                Men Wear
               </Typography>
               <Avatar
                 alt="men"
@@ -77,7 +83,7 @@ const HomePage: React.FC = () => {
                 variant="h5"
                 sx={{ fontWeight: "bold", fontFamily: "cursive" }}
               >
-                Kid's Wear
+                Kid Wear
               </Typography>
               <Avatar
                 alt="kids"
