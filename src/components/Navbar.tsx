@@ -17,20 +17,30 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from "../img/logo.png";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCartCount } from '../redux/cartSlice';
 
-const pages = ['Home', 'Fashion', 'About Us', 'Contact Us'];
-const settings = ['Profile', 'Login', 'Logout'];
+// import { addToCart } from '../redux/cartSlice';
+
+
+const pages = ['Home', 'Men','Women', 'About Us', 'Contact Us'];
+// const settings = ['Profile', 'Login', 'Logout'];
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
+  const cartCount = useSelector(selectCartCount);
+
 
   const handlePageClick = (page: string) => {
     switch (page) {
       case 'Home':
         navigate('/'); 
         break;
-      case 'Fashion':
-        navigate('/fashion'); 
+      case 'Men':
+        navigate('/menswear'); 
+        break;
+        case 'Women':
+        navigate('/womenswear'); 
         break;
       case 'About Us':
         navigate('/about');
@@ -38,33 +48,55 @@ const Navbar: React.FC = () => {
       case 'Contact Us':
         navigate('/contact'); 
         break;
+        
       default:
         navigate('/');
         break;
     }
   };
 
+  const goToCart = () => {
+    navigate('/addtocart');  
+  };
+  const goToLogin = () => {
+    navigate('/login');
+  };
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [navEl, setNavEl] = React.useState<Element & EventTarget | null>(null);
+  const [user, setUser] = React.useState<(Element & EventTarget) | null>(null);
 
 
-  const [anchorElNav, setAnchorElNav] = React.useState<Element & EventTarget | null>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<(Element & EventTarget) | null>(null);
+  
 
   const handleOpenNavMenu = (event: React.MouseEvent) => {
-    setAnchorElNav(event.currentTarget);
+    setNavEl(event.currentTarget);
   };
 
   const handleOpenUserMenu = (event: React.MouseEvent) => {
-    setAnchorElUser(event.currentTarget);
+    setUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setNavEl(null);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setUser(null);
   };
 
+    const handleLogin = () => {
+      setLoggedIn(true);
+      handleCloseUserMenu();
+    }
+    const handleLogout = () => {
+      setLoggedIn(false);
+      handleCloseUserMenu();
+    };
+  
+    const goToProfile = () => {
+      navigate('/profile');
+      handleCloseUserMenu();
+    };
   // Styled component for search bar
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -99,9 +131,9 @@ const Navbar: React.FC = () => {
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
       [theme.breakpoints.up('sm')]: {
-        width: '15ch',
+        width: '15rem',
         '&:focus': {
-          width: '20ch',
+          width: '20rem',
         },
       },
     },
@@ -129,7 +161,7 @@ const Navbar: React.FC = () => {
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorElNav}
+              anchorEl={navEl}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -139,7 +171,7 @@ const Navbar: React.FC = () => {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              open={Boolean(anchorElNav)}
+              open={Boolean(navEl)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
@@ -162,6 +194,7 @@ const Navbar: React.FC = () => {
               </Button>
             ))}
           </Box>
+         
 
           <Search sx={{ marginRight: "3rem" }}>
             <SearchIconWrapper>
@@ -182,7 +215,7 @@ const Navbar: React.FC = () => {
             <Menu
               sx={{ mt: '5rem' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
+              anchorEl={user}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -192,18 +225,53 @@ const Navbar: React.FC = () => {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
+              open={Boolean(user)}
               onClose={handleCloseUserMenu}
             >
+              {/* {loggedIn ? (
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
+            </Menu> */}
+             {loggedIn ? (
+                <Box>
+                  <MenuItem onClick={goToProfile}>
+                    <Typography sx={{ textAlign: 'center' }}>Profile</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
+                  </MenuItem>
+                </Box>
+              ) : (
+                <MenuItem onClick={handleLogin}>
+                  <Typography sx={{ textAlign: 'center' }} onClick = {goToLogin}>Login</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
 
-          <ShoppingCartIcon sx={{ marginLeft: "2rem" }} />
+          <IconButton  sx={{ color: 'white' }} onClick={goToCart}>
+           
+              <ShoppingCartIcon sx={{marginLeft:"2rem"}} />
+              {cartCount > 0 && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 1,
+                right: 3,
+                backgroundColor: 'red',
+                color: 'white',
+                borderRadius: '2rem',
+                padding: '0.2rem 0.5rem',
+                fontSize: '0.7rem',
+              }}
+            >
+              {cartCount}
+            </Box>
+          )}
+            </IconButton>
         </Toolbar>
       </Container>
     </AppBar>

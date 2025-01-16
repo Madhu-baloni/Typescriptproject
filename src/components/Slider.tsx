@@ -1,10 +1,19 @@
 import { Box, Typography, Button } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import React from 'react';
 
-const offers = [
+interface offers {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  buttonText:string;
+  buttonLink:string
+}
+const offers:offers[] = [
   {
-    id: 1,
+    id: "1",
      image: "https://t4.ftcdn.net/jpg/02/88/65/45/360_F_288654557_h0hiDv7cdEkdfKOIeF9wrSk4P6YH4ZMc.jpg",
     title: "Limited Time Offer!",
     description: "Get up to 50% off on all products. Hurry, the sale ends soon!",
@@ -12,7 +21,7 @@ const offers = [
     buttonLink: "/shop",
   },
   {
-    id: 2,
+    id: "2",
      image: "https://t4.ftcdn.net/jpg/05/39/99/67/360_F_539996737_T5gJEIEqsGUjMXhrLZt0lDLcrOWsSHlb.jpg",
     title: "Exclusive Deals Just for You",
     description: "Exclusive offers for our loyal customers. Don't miss out!",
@@ -20,7 +29,7 @@ const offers = [
     buttonLink: "/offers",
   },
   {
-    id: 3,
+    id: "3",
     image: "https://t4.ftcdn.net/jpg/03/09/86/97/360_F_309869755_IquCHHxF7YABo2odctUGEjMrgVDSM8qV.jpg",
     title: "Check Out Our New Arrivals!",
     description: "Fresh products just in! Browse the latest items and discover something new.",
@@ -28,7 +37,10 @@ const offers = [
     buttonLink: "/new-arrivals",
   },
 ];
+
+
 const Slider: React.FC = () => {
+  
   return (
     <>
     <Box sx={{backgroundColor:"#2E5077", marginBottom:"1rem"}}>

@@ -47,7 +47,7 @@ const About: React.FC = () => {
         </Typography>
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} sm={4}>
-            <Paper sx={{ padding: "2rem", textAlign: "center", boxShadow: 3 }}>
+            <Paper sx={{ padding: "2rem", textAlign: "center", boxShadow: 3}}>
               <img
                 src="https://www.shutterstock.com/image-photo/smiling-young-middle-eastern-man-600nw-2063524544.jpg"
                 alt="Team Member"
@@ -116,7 +116,7 @@ const About: React.FC = () => {
               />
               <Typography variant="h6">name</Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                CTO & Product Development
+               Product Development
               </Typography>
               <Typography
                 variant="body2"
